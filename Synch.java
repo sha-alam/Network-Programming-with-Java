@@ -40,7 +40,6 @@ class Synch {
 		Caller ob1 = new Caller(target, "Hello");
 		Caller ob2 = new Caller(target, "Synchronized");
 		Caller ob3 = new Caller(target, "World");
-
 		// wait for threads to end
 		try {
 			ob1.t.join();

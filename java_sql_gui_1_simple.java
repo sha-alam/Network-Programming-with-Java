@@ -66,7 +66,7 @@ public class java_sql_gui_1_simple extends JFrame implements ActionListener {
 		try {
 			Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");// Loading Driver
 			con = DriverManager.getConnection(
-					"jdbc:ucanaccess://E:\\Course\\3-2\\Network Programming with Java\\Lab Exam\\Solution\\Database\\lab.accdb");// Establishing Connection
+					"jdbc:ucanaccess://lab.accdb");// Establishing Connection
 			System.out.println("Connected Successfully");
 			st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 			rs = st.executeQuery("SELECT * FROM Practice");

@@ -5,7 +5,7 @@ public class java_sql_db_connect {
 		try {
 			Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");// Loading Driver
 			Connection connection = DriverManager.getConnection(
-					"jdbc:ucanaccess://Database\\lab.accdb");// Establishing
+					"jdbc:ucanaccess://lab.accdb");// Establishing
 																																// Connection
 			System.out.println("Connected Successfully");
 
