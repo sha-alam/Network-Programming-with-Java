@@ -7,15 +7,15 @@ public class java_sql_db_update_data {
 		try {
 			Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");// Loading Driver
 			Connection connection = DriverManager.getConnection(
-					"jdbc:ucanaccess://E:\\Course\\3-2\\Network Programming with Java\\Lab\\Solution\\Database\\Lab_18.accdb");// Establishing
+					"jdbc:ucanaccess://E:\\Course\\3-2\\Network Programming with Java\\Lab Exam\\Solution\\Database\\lab.accdb");// Establishing
 																																// Connection
 			System.out.println("Connected Successfully");
 			// Crating PreparedStatement object
 			PreparedStatement preparedStatement = connection
 					.prepareStatement("update Practice set Name=? where Phone=?");
 			// Setting values for Each Parameter
-			preparedStatement.setString(1, "Ahmed");
-			preparedStatement.setString(2, "01722633140");
+			preparedStatement.setString(1, "Mahfuz");
+			preparedStatement.setString(2, "01100000000");
 
 			preparedStatement.executeUpdate();
 			System.out.println("data updated successfully");

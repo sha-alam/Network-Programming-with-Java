@@ -11,13 +11,14 @@ public class java_sql_gui_1_simple extends JFrame implements ActionListener {
 	Connection con;
 	ResultSet rs;
 	Statement st;
+	PreparedStatement preparedStatement;
 
 	public java_sql_gui_1_simple() {
-		super("persionDetails");
+		super("Personal Details");
 		setLayout(null);
 		Label d = new Label("Person Details");
 		d.setBounds(200, 10, 150, 50);
-		d.setBackground(Color.RED);
+		d.setBackground(Color.BLUE);
 		add(d);
 		l1 = new JLabel("Name");
 		l1.setBounds(100, 100, 100, 50);
@@ -64,7 +65,8 @@ public class java_sql_gui_1_simple extends JFrame implements ActionListener {
 	public void connection() {
 		try {
 			Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");// Loading Driver
-			con = DriverManager.getConnection("jdbc:ucanaccess://D:\\Database\\Lab_18.accdb");// Establishing Connection
+			con = DriverManager.getConnection(
+					"jdbc:ucanaccess://E:\\Course\\3-2\\Network Programming with Java\\Lab Exam\\Solution\\Database\\lab.accdb");// Establishing Connection
 			System.out.println("Connected Successfully");
 			st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 			rs = st.executeQuery("SELECT * FROM Practice");
@@ -81,12 +83,14 @@ public class java_sql_gui_1_simple extends JFrame implements ActionListener {
 		if (e.getSource() == b1) {
 			System.out.println("I am show");
 			try {
-				if (rs.next()) {
-					tf1.setText(rs.getString("Name"));
-					tf2.setText(rs.getString("Email"));
-					tf3.setText(rs.getString("Phone"));
-				} else {
-					JOptionPane.showMessageDialog(null, "No data");
+
+				System.out.println("Name     " + "Email  " + "Phone");
+				while (rs.next()) {
+					String name = rs.getString("Name");
+					String email = rs.getString("Email");
+					String phone = rs.getString("Phone");
+					// Printing Results
+					System.out.println(name + " " + email + " " + phone);
 				}
 
 			} catch (Exception ex) {
@@ -99,36 +103,48 @@ public class java_sql_gui_1_simple extends JFrame implements ActionListener {
 			String up2 = tf2.getText();
 			String up3 = tf3.getText();
 			try {
-				rs.updateString("Name", up1);
-				rs.updateString("Email", up2);
-				rs.updateString("Phone", up3);
-				rs.insertRow();
-				System.out.println("one row is inserted");
+				preparedStatement = con
+						.prepareStatement("" + "INSERT INTO Practice(Name,Email,Phone) VALUES (?, ?, ?)");
+				// Setting values for Each Parameter
 
+				preparedStatement.setString(1, up1);
+				preparedStatement.setString(2, up2);
+				preparedStatement.setString(3, up3);
+				// Executing Query
+				preparedStatement.executeUpdate();
+				System.out.println("data inserted successfully");
 			} catch (Exception er) {
 			}
 		}
 		if (e.getSource() == b3) {
 			System.out.println("I am Update");
 			String up1 = tf1.getText();
-			String up2 = tf2.getText();
+			// String up2=tf2.getText();
 			String up3 = tf3.getText();
 			try {
-				rs.updateString("Name", up1);
-				rs.updateString("Email", up2);
-				rs.updateString("Phone", up3);
-				rs.updateRow();
-				System.out.println("one row is updated");
+				// Crating PreparedStatement object
+				preparedStatement = con.prepareStatement("update Practice set Name=? where Phone=?");
+				// Setting values for Each Parameter
+				preparedStatement.setString(1, up1);
+				preparedStatement.setString(2, up3);
+
+				preparedStatement.executeUpdate();
+				System.out.println("data updated successfully");
 
 			} catch (Exception er) {
 			}
 		}
 
 		if (e.getSource() == b4) {
+			String up3 = tf3.getText();
 			System.out.println("I am Delete");
 			try {
-				rs.deleteRow();
-				System.out.println("one row is deleted");
+				// Crating PreparedStatement object
+				preparedStatement = con.prepareStatement("delete from Practice  where Phone=?");
+				// Setting values for Each Parameter
+				preparedStatement.setString(1, up3);
+				preparedStatement.executeUpdate();
+				System.out.println("data Delete successfully");
 			} catch (Exception er) {
 
 			}
